@@ -1,14 +1,23 @@
 <%- include("./partials/header.ejs", {title: "About"}) %>
+<%!
+  console.log(errors, article)
+  let authorError = (errors)? errors.find(error => error.path=="author") : null
+  let titleError = (errors)? errors.find(error => error.title=="title") : null
+  let descError = (errors)? errors.find(error => error.path=="description") : null
+  let contentError = (errors)? errors.find(error => error.path=="content") : null
+  let imgError = (errors)? errors.find(error => error.path=="urlToImage") : null
+%>
 
 <h1>Ajouter un article</h1>
 
-<form action="">
+<form class="flex column gap-10" action="">
   <div>
     <div>
       <label for="author">Auteur</label>
     </div>
     <div>
-      <input type="text" name="author" id="author" />
+      <input class="pd-5 b-radius-10 w-100 <%= (authorError)? "border-1-red" : "border-1-black" %> " type="text" name="author" id="author" value="<%= (article)? article.author : "" %>"/>
+      <p class="small-text col-red"><%= (authorError)? authorError.msg : "" %></p>
     </div>
   </div>
   <div>
@@ -16,7 +25,8 @@
       <label for="title">Title</label>
     </div>
     <div>
-      <input type="text" name="title" id="title" />
+      <input class="pd-5 b-radius-10 w-100 <%= (titleError)? "border-1-red" : "border-1-black" %> " type="text" name="title" id="title" value="<%= (article)? article.title : "" %>"/>
+      <p class="small-text col-red"><%= (titleError)? titleError.msg : "" %></p>
     </div>
   </div>
   <div>
@@ -24,7 +34,8 @@
       <label for="description">Description</label>
     </div>
     <div>
-      <input type="text" name="description" id="description" />
+      <input class="pd-5 b-radius-10 w-100 <%= (descError)? "border-1-red" : "border-1-black" %> " type="text" name="description" id="description" value="<%= (article)? article.description : "" %>"/>
+      <p class="small-text col-red"><%= (descError)? descError.msg : "" %></p>
     </div>
   </div>
   <div>
@@ -32,7 +43,8 @@
       <label for="img">Choisir une image</label>
     </div>
     <div>
-      <input type="file" name="img" id="img" />
+      <input class="pd-5 b-radius-10 w-100 <%= (imgError)? "border-1-red" : "border-1-black" %> " type="file" name="img" id="img" />
+      <p class="small-text col-red"><%= (imgError)? imgError.msg : "" %></p>
     </div>
   </div>
 
@@ -41,11 +53,12 @@
       <label for="content">Contenu</label>
     </div>
     <div>
-      <textarea name="content" id="content"></textarea>
+      <textarea class="pd-5 b-radius-10 w-100 <%= (contentError)? "border-1-red" : "border-1-black" %> " name="content" id="content"><%= (article)? article.content : "" %></textarea>
+      <p class="small-text col-red"><%= (contentError)? contentError.msg : "" %></p>
     </div>
   </div>
 
-  <input type="submit" id="btn-submit" value="Ajouter" />
+  <input class="btn bg-blue col-white w-100" type="submit" id="btn-submit" value="Ajouter" />
 </form>
 
 <script src="/js/addArticle.js"></script>

@@ -92,6 +92,14 @@ a {
     border-radius: 10px;
 }
 
+.border-1-black{
+    border: solid 1px black;
+}
+
+.border-1-red{
+    border: solid 1px red;
+}
+
 .box-shad-click {
     box-shadow: rgba(99, 99, 99, 0.045) 0px 2px 8px 0px;
     transition: all ease-in-out 0.3s;
@@ -147,6 +155,10 @@ a {
     color: rgb(199, 197, 197);
 }
 
+.col-red{
+    color: red;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -188,8 +200,14 @@ a {
     border-radius: 20px;
     padding: 10px;
     transition: all ease-in-out 0.2s;
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover{
     transform: scale(0.99);
+}
+
+.btn:disabled{
+    
 }

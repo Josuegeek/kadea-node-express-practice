@@ -33,10 +33,6 @@ async function addArticle(article){
         "Content-Type": "application/json"
       }
     })
-
-    if (response.ok) {
-      window.location.href = "/articles"
-    }
     
     console.log(response);
   } catch (error) {
