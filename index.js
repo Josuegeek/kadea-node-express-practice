@@ -12,6 +12,10 @@ app.use(express.json());
 function addArticleValidations(){
   return [
     body("title").escape().isLength({ min: 5, max: 255 }).withMessage("Le nom doit avoir entre 5 et 255 caracteres"),
+    body("content").escape().isLength({min:5, max:500}).withMessage("le contenu doit avoir entre 5 et 500 caractères"),
+    body("description").escape().isLength({min:5, max:500}).withMessage("le contenu doit avoir entre 5 et 500 caractères"),
+    body("urlToImage").isURL().withMessage("Veuillez spécifier le bon url de l'image"),
+    body("author").escape().isLength({min:2, max:50}).withMessage("Le nom de l'auteur doit être entre 2 et 50 caractères")
   ]
 }
 
@@ -46,7 +50,13 @@ app.post("/articles", addArticleValidations(), (req, res) => {
   article.slug = article.title.toLowerCase().replace(" ", "-");
   article.publishedAt = new Date();
 
-  articles.push(article);
+  if(result.errors.length<=0){
+    articles.push(article);
+    
+  }
+  else{
+    console.log("il y a erreur")
+  }
 
   res.send("ok");
 });
