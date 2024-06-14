@@ -10,7 +10,7 @@ app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 
-function addArticleValidations() {
+function articleFieldsValidations() {
   return [
     body("title").escape().isLength({ min: 5, max: 255 }).withMessage("Le nom doit avoir entre 5 et 255 caracteres"),
     body("content").escape().isLength({min:5, max:500}).withMessage("le contenu doit avoir entre 5 et 500 caractères"),
@@ -20,6 +20,11 @@ function addArticleValidations() {
   ]
 }
 
+function updateDBJSON(array) {
+  fs.writeFileSync("./data/db.json", JSON.stringify(array, null, 2));
+}
+
+
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -27,6 +32,18 @@ app.get("/", (req, res) => {
 app.get("/contact", (req, res) => {
   res.render("contact");
 });
+
+app.get("/article/update/:slug", (req, res)=>{
+   const { slug } = req.params;
+  const article = articles.find((article) => article.slug === slug);
+
+  if (article) {
+    res.render("updateArticle", { article });
+  } else {
+    res.render("404");
+  }
+
+})
 
 app.get("/about", (req, res) => {
   res.render("about");
@@ -41,25 +58,60 @@ app.get("/articles", (req, res) => {
 // description: pas vide, echapper, max : 500 min: 5
 // contenu : pas vide, echapper, max : 500 min: 5
 
-app.post("/articles", addArticleValidations(), (req, res) => {
+app.delete("/articles/:slug", (req, res) => {
+  const { slug } = req.params;
+
+  const articleIndex = articles.findIndex((article) => article.slug === slug);
+  articles.splice(articleIndex, 1);
+  updateDBJSON(articles);
+  res.send("ok");
+});
+
+app.post("/articles", articleFieldsValidations(), (req, res) => {
   const article = req.body;
 
   const result = validationResult(req);
-  
-  article.slug = article.title.toLowerCase().replace(" ", "-");
-  article.publishedAt = new Date()
-  console.log(result);
-  if(result.errors.length<=0){
+
+  console.log(result.errors);
+  if (result.errors.length === 0) {
+    article.slug = article.title.toLowerCase().replace(" ", "-");
+    article.publishedAt = new Date();
+
     articles.push(article);
-    fs.writeFileSync("./data/db.json", JSON.stringify(articles,null,2));
-    res.render("articles");
+    updateDBJSON(articles);
+    res.send("ok");
+  } else {
+    res.statusCode = 400;
   }
-  else{
-    console.log(result.errors);
-    res.render("addArticle", {article, errors : result.errors})
+});
+
+/* title,
+    author,
+    content,
+    description,
+    image,
+    updatedAt
+*/
+app.put("/articles/:slug", articleFieldsValidations(), (req, res) => {
+  const { slug } = req.params;
+  const { title, author, content, description, urlToImage } = req.body;
+
+  const articleIndex = articles.findIndex((article) => article.slug === slug);
+  if (articleIndex < 0) {
+    return res.status(404).send("Not found");
   }
-  
-});   
+
+  console.log("in");
+
+  articles[articleIndex].title = title;
+  articles[articleIndex].content = content;
+  articles[articleIndex].author = author;
+  articles[articleIndex].description = description;
+  articles[articleIndex].urlToImage = urlToImage;
+  articles[articleIndex].updateAt = new Date();
+
+  updateDBJSON(articles);
+});
 
 app.get("/articles/:slug", (req, res) => {
   const { slug } = req.params;

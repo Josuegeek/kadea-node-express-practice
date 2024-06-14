@@ -3,6 +3,13 @@
 <h2><%= article.author %></h2>
 <p>Date de publication<%= article.publishedAt %></p>
 <h2><%= article.description %></h2>
+<button id="delete" name="<%=article.slug %>" type="submit">Supprimer</button>
+<a href="/article/update/<%=article.slug %>">Modifier</a>
+
 <img src="<%= `${article.urlToImage}` %>" alt="gallery image" />
 <p><%= article.content %></p>
+
+
+<script src="/js/delete.js"></script>
+
 <%- include("./partials/footer.ejs") %>

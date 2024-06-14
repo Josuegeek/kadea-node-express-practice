@@ -1,0 +1,52 @@
+<%- include("./partials/header.ejs", {title: "Mettre à jour l'article"}) %>
+
+<h1>Mettre à jour un article</h1>
+
+<form action="">
+  <div>
+    <div>
+      <label for="author">Auteur</label>
+    </div>
+    <div>
+      <input type="text" name="author" id="author" value="<%= article.author %>" />
+    </div>
+  </div>
+  <div>
+    <div>
+      <label for="title">Title</label>
+    </div>
+    <div>
+      <input type="text" name="title" id="title" />
+    </div>
+  </div>
+  <div>
+    <div>
+      <label for="description">Description</label>
+    </div>
+    <div>
+      <input type="text" name="description" id="description" />
+    </div>
+  </div>
+  <div>
+    <div>
+      <label for="img">Choisir une image</label>
+    </div>
+    <div>
+      <input type="file" name="img" id="img" />
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <label for="content">Contenu</label>
+    </div>
+    <div>
+      <textarea name="content" id="content"></textarea>
+    </div>
+  </div>
+
+  <input type="submit" id="btn-submit" value="Ajouter" />
+</form>
+
+<script src="/js/addArticle.js"></script>
+<%- include("./partials/footer.ejs") %>
