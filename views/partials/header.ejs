@@ -13,10 +13,10 @@
 <body>
   <header>
     <ul class="menu flex row bg-blue al-center jus-center gap-20 pd-10 col-gray">
-      <li><a href="/">Home</a></li>
-      <li><a href="/articles">Articles</a></li>
-      <li><a href="/contact">Contact</a></li>
-      <li><a href="/about">About</a></li>
+      <li><a class="<%= (title==="Home page")? 'selected' : '' %>" href="/">Home</a></li>
+      <li><a class="<%= (title==="Liste d'articles")? 'selected' : '' %>" href="/articles">Articles</a></li>
+      <li><a class="<%= (title==="Contact")? 'selected' : '' %>" href="/contact">Contact</a></li>
+      <li><a class="<%= (title==="About")? 'selected' : '' %>"href="/about">About</a></li>
     </ul>
   </header>
 

@@ -1,12 +1,16 @@
-<%- include("./partials/header.ejs", {title: "articles"}) %>
+<%- include("./partials/header.ejs", {title: article.title}) %>
+<a class="col-blue" href="/articles"><p>Retour à la liste d'articles</p></a>
 <h1><%= article.title %></h1>
 <h2><%= article.author %></h2>
 <p>Date de publication<%= article.publishedAt %></p>
 <h2><%= article.description %></h2>
-<button id="delete" name="<%=article.slug %>" type="submit">Supprimer</button>
-<a href="/article/update/<%=article.slug %>">Modifier</a>
 
-<img src="<%= `${article.urlToImage}` %>" alt="gallery image" />
+<div class="flex row gap-10 al-center jus-center">
+    <button class="border-1-red btn bg-white col-blue mg-20 box-shad-click" id="delete" name="<%=article.slug %>" type="submit">Supprimer</button>
+    <a class="btn bg-blue col-white" href="/article/update/<%=article.slug %>">Modifier</a>
+</div>
+
+<img class="details-img" src="<%= `${article.urlToImage}` %>" alt="gallery image" />
 <p><%= article.content %></p>
 
 

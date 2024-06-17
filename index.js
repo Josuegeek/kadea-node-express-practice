@@ -34,7 +34,7 @@ app.get("/contact", (req, res) => {
 });
 
 app.get("/article/update/:slug", (req, res)=>{
-   const { slug } = req.params;
+  const { slug } = req.params;
   const article = articles.find((article) => article.slug === slug);
 
   if (article) {
@@ -42,7 +42,6 @@ app.get("/article/update/:slug", (req, res)=>{
   } else {
     res.render("404");
   }
-
 })
 
 app.get("/about", (req, res) => {
@@ -101,8 +100,6 @@ app.put("/articles/:slug", articleFieldsValidations(), (req, res) => {
     return res.status(404).send("Not found");
   }
 
-  console.log("in");
-
   articles[articleIndex].title = title;
   articles[articleIndex].content = content;
   articles[articleIndex].author = author;
@@ -111,6 +108,35 @@ app.put("/articles/:slug", articleFieldsValidations(), (req, res) => {
   articles[articleIndex].updateAt = new Date();
 
   updateDBJSON(articles);
+});
+
+app.post("/articles/:slug", articleFieldsValidations(), (req, res) => {
+  const { slug } = req.params;
+  const article = articles.find((a) => a.slug == slug);
+  const newArticle = req.body
+  newArticle.slug = slug
+  const result = validationResult(newArticle);
+  console.log(slug,article,newArticle)
+  if (result.errors.length === 0) {
+    console.log("in")
+
+    if (article) {
+      console.log("inner")
+      newArticle.slug = article.title.toLowerCase().replace(" ", "-");
+      newArticle.publishedAt = new Date();
+      const articletoEditIndex = articles.indexOf(article);
+      articles[articletoEditIndex] = newArticle
+      updateDBJSON(articles);
+      res.send("ok");
+    } else {
+      res.render("404");
+    }
+
+    //articles.push(article);
+  } else {
+    console.log("out")
+    res.statusCode = 400;
+  }
 });
 
 app.get("/articles/:slug", (req, res) => {

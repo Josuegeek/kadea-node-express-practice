@@ -5,7 +5,7 @@ const cloudName = "dzcuoxidd";
 const presetName = "mxvteo84";
 
 
-addColor.style.color= "yellow";
+//addColor.style.color= "yellow";
 
 // https://api.cloudinary.com/v1_1/<CLOUD_NAME>/image/upload
 

@@ -2,13 +2,13 @@
 
 <h1>Mettre à jour un article</h1>
 
-<form action="">
+<form class="flex column gap-10" action="">
   <div>
     <div>
       <label for="author">Auteur</label>
     </div>
     <div>
-      <input type="text" name="author" id="author" value="<%= article.author %>" />
+      <input class="pd-5 b-radius-10 w-100 border-1-black" type="text" name="author" id="author" value="<%= article.author %>" />
     </div>
   </div>
   <div>
@@ -16,7 +16,7 @@
       <label for="title">Title</label>
     </div>
     <div>
-      <input type="text" name="title" id="title" />
+      <input class="pd-5 b-radius-10 w-100 border-1-black" type="text" name="title" id="title" value="<%= article.title %>" />
     </div>
   </div>
   <div>
@@ -24,15 +24,17 @@
       <label for="description">Description</label>
     </div>
     <div>
-      <input type="text" name="description" id="description" />
+      <input class="pd-5 b-radius-10 w-100 border-1-black" type="text" name="description" id="description" value="<%= article.description %>"/>
     </div>
   </div>
   <div>
     <div>
-      <label for="img">Choisir une image</label>
+      <label for="img">
+        <img id="previewImage" class="details-img" src="<%= article.urlToImage %>" alt="">
+      </label>
     </div>
     <div>
-      <input type="file" name="img" id="img" />
+      <input class="pd-5 b-radius-10 w-100 border-1-black" type="file" name="img" id="img" />
     </div>
   </div>
 
@@ -41,12 +43,12 @@
       <label for="content">Contenu</label>
     </div>
     <div>
-      <textarea name="content" id="content"></textarea>
+      <textarea class="pd-5 b-radius-10 w-100 border-1-black" name="content" id="content"><%= article.content %></textarea>
     </div>
   </div>
 
-  <input type="submit" id="btn-submit" value="Ajouter" />
+  <input class="btn bg-blue col-white w-100 mg-bottom-10 " type="submit" id="btn-submit" value="Modifier" data-slug="<%= article.slug %>"/>
 </form>
 
-<script src="/js/addArticle.js"></script>
+<script src="/js/updateArticle.js"></script>
 <%- include("./partials/footer.ejs") %>
